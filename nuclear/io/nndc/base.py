@@ -121,6 +121,7 @@ def parse_decay_radiation_dataset(decay_rad_dataset_dict):
     -------
 
     """
+    
     meta = {
         "energy_column_unit": u.keV,
         "end_point_energy_column_unit": u.keV,
@@ -239,7 +240,6 @@ def store_decay_radiation(isotope_string, force_update=False):
         file_exists = False
         data_exists = False
     else:
-        file_exists = True
         decay_radiation_db = pd.read_hdf(db_fname, "decay_radiation")
         if isotope_string in decay_radiation_db.index:
             data_exists = True
@@ -249,7 +249,6 @@ def store_decay_radiation(isotope_string, force_update=False):
     if data_exists and not force_update:
         logger.warning(f"{isotope_string} is already in the database "
             "(force_update to overwrite)")
-
     new_decay_radiation, new_meta = download_decay_radiation(isotope_string)
 
     if file_exists:
